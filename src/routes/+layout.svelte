@@ -123,7 +123,7 @@
 
 				_socket.on('user-count', (data) => {
 					console.log('user-count', data);
-					activeUserCount.set(data.count);
+					// activeUserCount.set(data.count);
 				});
 
 				_socket.on('usage', (data) => {

@@ -83,7 +83,7 @@
 	let eventConfirmationInputValue = '';
 	let eventCallback = null;
 
-	let showModelSelector = true;
+	let showModelSelector = false;
 
 	let selectedModels = [''];
 	let atSelectedModel: Model | undefined;
@@ -317,7 +317,7 @@
 		});
 
 		if (chat) {
-			tags = await getTags();
+			// tags = await getTags();
 			const chatContent = chat.chat;
 
 			if (chatContent) {

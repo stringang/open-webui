@@ -93,16 +93,7 @@
 					documents.set(await getDocs(localStorage.token));
 				})(),
 				(async () => {
-					tools.set(await getTools(localStorage.token));
-				})(),
-				(async () => {
-					functions.set(await getFunctions(localStorage.token));
-				})(),
-				(async () => {
 					banners.set(await getBanners(localStorage.token));
-				})(),
-				(async () => {
-					tags.set(await getAllChatTags(localStorage.token));
 				})()
 			]);
 
@@ -172,7 +163,7 @@
 			});
 
 			if ($user.role === 'admin') {
-				showChangelog.set(localStorage.version !== $config.version);
+				// showChangelog.set(localStorage.version !== $config.version);
 			}
 
 			await tick();
@@ -183,7 +174,6 @@
 </script>
 
 <SettingsModal bind:show={$showSettings} />
-<ChangelogModal bind:show={$showChangelog} />
 
 <div class="app relative">
 	<div
