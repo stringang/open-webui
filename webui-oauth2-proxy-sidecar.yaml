@@ -1,0 +1,156 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: open-webui
+  namespace: open-webui
+  labels:
+    app: open-webui
+    version: v1
+spec:
+  selector:
+    matchLabels:
+      app: open-webui
+      version: v1
+  replicas: 1
+  template:
+    metadata:
+      annotations:
+        proxy.istio.io/config: |
+          holdApplicationUntilProxyStarts: true
+      labels:
+        app: open-webui
+        version: v1
+    spec:
+      containers:
+        - name: open-webui
+          image: 'ghcr.io/open-webui/open-webui:0.3.11'
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+              name: http
+          env:
+            - name: WEBUI_SECRET_KEY
+              value: 't0p-s3cr3t'
+            - name: DEFAULT_USER_ROLE
+              value: "user"
+            - name: DEFAULT_MODELS
+              value: "qwen:7b"
+            - name: WEBUI_AUTH
+              value: "false"
+            - name: DATABASE_URL
+              value: 'postgresql://postgres:LAQhJZYnUf@postgresql-hl.open-webui.svc.cluster.local:5432/webui'
+            - name: WEBUI_AUTH_TRUSTED_EMAIL_HEADER
+              value: 'X-Forwarded-Email'
+            - name: WEBUI_AUTH_TRUSTED_NAME_HEADER
+              value: 'X-Forwarded-User'
+            - name: WEBUI_AUTH_TRUSTED_PREFERRED_NAME_HEADER
+              value: 'X-Forwarded-Preferred-Username'
+            - name: ENABLE_OAUTH_SIGNUP
+              value: 'true'
+            - name: OAUTH_MERGE_ACCOUNTS_BY_EMAIL
+              value: 'true'
+            - name: OLLAMA_BASE_URL
+              value: "http://ollama.ollama.svc.cluster.local:11434"
+            - name: ENABLE_OPENAI_API
+              value: 'false'
+            - name: ENABLE_LITELLM
+              value: 'false'
+          tty: true
+          resources:
+            limits:
+              cpu: "1000m"
+              memory: "1Gi"
+            requests:
+              cpu: 500m
+              memory: 500Mi
+          livenessProbe:
+            initialDelaySeconds: 30
+            failureThreshold: 3
+            timeoutSeconds: 5
+            periodSeconds: 30
+            successThreshold: 1
+            httpGet:
+              port: http
+              path: /health
+              scheme: HTTP
+          readinessProbe:
+            initialDelaySeconds: 30
+            failureThreshold: 3
+            timeoutSeconds: 5
+            periodSeconds: 30
+            successThreshold: 1
+            httpGet:
+              port: http
+              path: /health
+              scheme: HTTP
+        - name: oauth2-proxy
+          image: 'docker.io/oauth2-proxy:v7.6.0'
+          resources:
+            limits:
+              cpu: "1000m"
+              memory: "1Gi"
+            requests:
+              cpu: 500m
+              memory: 500Mi
+          env:
+            - name: OAUTH2_PROXY_HTTP_ADDRESS
+              value: '0.0.0.0:4180'
+            - name: OAUTH2_PROXY_UPSTREAMS
+              value: 'http://127.0.0.1:8080/'
+            - name: OAUTH2_PROXY_PROVIDER
+              value: 'oidc'
+            - name: OAUTH2_PROXY_PROVIDER_DISPLAY_NAME
+              value: 'kylin'
+            - name: OAUTH2_PROXY_OIDC_ISSUER_URL
+              value: 'https://oidc.xxxx.cn'
+            - name: OAUTH2_PROXY_CLIENT_ID
+              value: 'open-webui'
+            - name: OAUTH2_PROXY_CLIENT_SECRET
+              value: 'xxxx'
+            - name: OAUTH2_PROXY_EMAIL_DOMAINS
+              value: 'google.com,outlook.com'
+            - name: OAUTH2_PROXY_REDIRECT_URL
+              value: 'http://open-webui.xxxx.com/oauth2/callback'
+            - name: OAUTH2_PROXY_COOKIE_SECRET
+              value: '0Dpyhbl83-oUQ6OnaKMtzXc-XiboYFRzVRLpACgrJFE='
+            - name: OAUTH2_PROXY_COOKIE_SECURE
+              value: 'false'
+            - name: OAUTH2_PROXY_COOKIE_DOMAINS
+              value: '.xxx.com,.xxx.cn'
+            - name: OAUTH2_PROXY_SKIP_PROVIDER_BUTTON
+              value: 'true'
+            - name: OAUTH2_PROXY_PASS_AUTHORIZATION_TOKEN
+              value: 'true'
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: open-webui
+  namespace: open-webui
+spec:
+  type: ClusterIP
+  selector:
+    app: open-webui
+  ports:
+    - port: 8080
+      targetPort: 4180 # oauth2-proxy port
+      name: http
+---
+kind: Ingress
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: open-webui
+  namespace: open-webui
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: webui.xxxx.com
+      http:
+        paths:
+          - path: /
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: open-webui
+                port:
+                  name: http
