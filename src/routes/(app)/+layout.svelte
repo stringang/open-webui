@@ -92,9 +92,9 @@
 				(async () => {
 					documents.set(await getDocs(localStorage.token));
 				})(),
-				(async () => {
-					banners.set(await getBanners(localStorage.token));
-				})()
+				// (async () => {
+				// 	banners.set(await getBanners(localStorage.token));
+				// })()
 			]);
 
 			document.addEventListener('keydown', function (event) {

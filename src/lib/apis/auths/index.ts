@@ -1,4 +1,4 @@
-import { WEBUI_API_BASE_URL } from '$lib/constants';
+import { WEBUI_API_BASE_URL, QA_BASE_URL } from '$lib/constants';
 
 export const getAdminDetails = async (token: string) => {
 	let error = null;
@@ -85,7 +85,7 @@ export const updateAdminConfig = async (token: string, body: object) => {
 export const getSessionUser = async (token: string) => {
 	let error = null;
 
-	const res = await fetch(`${WEBUI_API_BASE_URL}/auths/`, {
+	const res = await fetch(`${QA_BASE_URL}/api/v1/auths`, {
 		method: 'GET',
 		headers: {
 			'Content-Type': 'application/json',
@@ -113,7 +113,7 @@ export const getSessionUser = async (token: string) => {
 export const userSignIn = async (email: string, password: string) => {
 	let error = null;
 
-	const res = await fetch(`${WEBUI_API_BASE_URL}/auths/signin`, {
+	const res = await fetch(`${QA_BASE_URL}/api/v1/auths/signin`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json'

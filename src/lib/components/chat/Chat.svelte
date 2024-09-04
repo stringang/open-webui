@@ -9,7 +9,7 @@
 
 	import type { Writable } from 'svelte/store';
 	import type { i18n as i18nType } from 'i18next';
-	import { OLLAMA_API_BASE_URL, OPENAI_API_BASE_URL, WEBUI_BASE_URL } from '$lib/constants';
+	import { OLLAMA_API_BASE_URL, OPENAI_API_BASE_URL, WEBUI_BASE_URL, QA_BASE_URL } from '$lib/constants';
 
 	import {
 		chatId,
@@ -228,7 +228,7 @@
 		};
 		window.addEventListener('message', onMessageHandler);
 
-		$socket.on('chat-events', chatEventHandler);
+		// $socket.on('chat-events', chatEventHandler);
 
 		if (!$chatId) {
 			chatId.subscribe(async (value) => {
@@ -245,7 +245,7 @@
 		return () => {
 			window.removeEventListener('message', onMessageHandler);
 
-			$socket.off('chat-events');
+			// $socket.off('chat-events');
 		};
 	});
 
@@ -1118,7 +1118,7 @@
 					chat_id: $chatId,
 					id: responseMessageId
 				},
-				`${WEBUI_BASE_URL}/api`
+				`${QA_BASE_URL}/api`
 			);
 
 			// Wait until history/message have been updated

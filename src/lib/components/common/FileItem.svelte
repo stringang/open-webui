@@ -40,7 +40,7 @@
 			if (clickHandler === null) {
 				if (url) {
 					if (type === 'file') {
-						window.open(`${url}/content`, '_blank').focus();
+						window.open(`${url}`, '_blank').focus();
 					} else {
 						window.open(`${url}`, '_blank').focus();
 					}

@@ -1,4 +1,4 @@
-import { WEBUI_API_BASE_URL } from '$lib/constants';
+import { WEBUI_API_BASE_URL, QA_BASE_URL } from '$lib/constants';
 
 export const createNewPrompt = async (
 	token: string,
@@ -41,7 +41,7 @@ export const createNewPrompt = async (
 export const getPrompts = async (token: string = '') => {
 	let error = null;
 
-	const res = await fetch(`${WEBUI_API_BASE_URL}/prompts/`, {
+	const res = await fetch(`${QA_BASE_URL}/api/v1/prompts`, {
 		method: 'GET',
 		headers: {
 			Accept: 'application/json',

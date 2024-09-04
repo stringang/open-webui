@@ -133,7 +133,7 @@
 				fileItem.status = 'uploaded';
 				fileItem.file = uploadedFile;
 				fileItem.id = uploadedFile.id;
-				fileItem.url = `${WEBUI_API_BASE_URL}/files/${uploadedFile.id}`;
+				fileItem.url = uploadedFile?.meta?.path;
 
 				// TODO: Check if tools & functions have files support to skip this step to delegate file processing
 				// Default Upload to VectorDB

@@ -1,4 +1,4 @@
-import { RAG_API_BASE_URL } from '$lib/constants';
+import { RAG_API_BASE_URL, STORE_BASE_URL } from '$lib/constants';
 
 export const getRAGConfig = async (token: string) => {
 	let error = null;
@@ -173,7 +173,7 @@ export const updateQuerySettings = async (token: string, settings: QuerySettings
 export const processDocToVectorDB = async (token: string, file_id: string) => {
 	let error = null;
 
-	const res = await fetch(`${RAG_API_BASE_URL}/process/doc`, {
+	const res = await fetch(`${STORE_BASE_URL}/api/v1/files/process/doc`, {
 		method: 'POST',
 		headers: {
 			Accept: 'application/json',

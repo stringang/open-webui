@@ -110,26 +110,16 @@
 			await WEBUI_NAME.set(backendConfig.name);
 
 			if ($config) {
-				const _socket = io(`${WEBUI_BASE_URL}` || undefined, {
-					path: '/ws/socket.io',
-					auth: { token: localStorage.token }
-				});
-
-				_socket.on('connect', () => {
-					console.log('connected');
-				});
-
-				await socket.set(_socket);
-
-				_socket.on('user-count', (data) => {
-					console.log('user-count', data);
-					// activeUserCount.set(data.count);
-				});
-
-				_socket.on('usage', (data) => {
-					console.log('usage', data);
-					USAGE_POOL.set(data['models']);
-				});
+				// const _socket = io(`${WEBUI_BASE_URL}` || undefined, {
+				// 	path: '/ws/socket.io',
+				// 	auth: { token: localStorage.token }
+				// });
+				//
+				// _socket.on('connect', () => {
+				// 	console.log('connected');
+				// });
+				//
+				// await socket.set(_socket);
 
 				if (localStorage.token) {
 					// Get Session User Info

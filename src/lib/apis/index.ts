@@ -1,9 +1,9 @@
-import { WEBUI_API_BASE_URL, WEBUI_BASE_URL } from '$lib/constants';
+import { WEBUI_API_BASE_URL, WEBUI_BASE_URL, QA_BASE_URL } from '$lib/constants';
 
 export const getModels = async (token: string = '') => {
 	let error = null;
 
-	const res = await fetch(`${WEBUI_BASE_URL}/api/models`, {
+	const res = await fetch(`${QA_BASE_URL}/api/v1/models`, {
 		method: 'GET',
 		headers: {
 			Accept: 'application/json',
@@ -74,7 +74,7 @@ type ChatCompletedForm = {
 export const chatCompleted = async (token: string, body: ChatCompletedForm) => {
 	let error = null;
 
-	const res = await fetch(`${WEBUI_BASE_URL}/api/chat/completed`, {
+	const res = await fetch(`${QA_BASE_URL}/api/v1/chat/completed`, {
 		method: 'POST',
 		headers: {
 			Accept: 'application/json',
@@ -113,7 +113,7 @@ type ChatActionForm = {
 export const chatAction = async (token: string, action_id: string, body: ChatActionForm) => {
 	let error = null;
 
-	const res = await fetch(`${WEBUI_BASE_URL}/api/chat/actions/${action_id}`, {
+	const res = await fetch(`${QA_BASE_URL}/api/chat/actions/${action_id}`, {
 		method: 'POST',
 		headers: {
 			Accept: 'application/json',
@@ -146,7 +146,7 @@ export const chatAction = async (token: string, action_id: string, body: ChatAct
 export const getTaskConfig = async (token: string = '') => {
 	let error = null;
 
-	const res = await fetch(`${WEBUI_BASE_URL}/api/task/config`, {
+	const res = await fetch(`${QA_BASE_URL}/api/task/config`, {
 		method: 'GET',
 		headers: {
 			Accept: 'application/json',
@@ -174,7 +174,7 @@ export const getTaskConfig = async (token: string = '') => {
 export const updateTaskConfig = async (token: string, config: object) => {
 	let error = null;
 
-	const res = await fetch(`${WEBUI_BASE_URL}/api/task/config/update`, {
+	const res = await fetch(`${QA_BASE_URL}/api/task/config/update`, {
 		method: 'POST',
 		headers: {
 			Accept: 'application/json',
@@ -212,7 +212,7 @@ export const generateTitle = async (
 ) => {
 	let error = null;
 
-	const res = await fetch(`${WEBUI_BASE_URL}/api/task/title/completions`, {
+	const res = await fetch(`${QA_BASE_URL}/api/v1/task/title/completions`, {
 		method: 'POST',
 		headers: {
 			Accept: 'application/json',
@@ -252,7 +252,7 @@ export const generateEmoji = async (
 ) => {
 	let error = null;
 
-	const res = await fetch(`${WEBUI_BASE_URL}/api/task/emoji/completions`, {
+	const res = await fetch(`${QA_BASE_URL}/api/task/emoji/completions`, {
 		method: 'POST',
 		headers: {
 			Accept: 'application/json',
@@ -300,7 +300,7 @@ export const generateSearchQuery = async (
 ) => {
 	let error = null;
 
-	const res = await fetch(`${WEBUI_BASE_URL}/api/task/query/completions`, {
+	const res = await fetch(`${QA_BASE_URL}/api/task/query/completions`, {
 		method: 'POST',
 		headers: {
 			Accept: 'application/json',
@@ -626,7 +626,7 @@ export const updatePipelineValves = async (
 export const getBackendConfig = async () => {
 	let error = null;
 
-	const res = await fetch(`${WEBUI_BASE_URL}/api/config`, {
+	const res = await fetch(`${QA_BASE_URL}/api/v1/config`, {
 		method: 'GET',
 		headers: {
 			'Content-Type': 'application/json'

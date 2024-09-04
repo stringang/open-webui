@@ -1,4 +1,4 @@
-import { WEBUI_API_BASE_URL } from '$lib/constants';
+import { WEBUI_API_BASE_URL, QA_BASE_URL } from '$lib/constants';
 
 export const createNewDoc = async (
 	token: string,
@@ -45,7 +45,7 @@ export const createNewDoc = async (
 export const getDocs = async (token: string = '') => {
 	let error = null;
 
-	const res = await fetch(`${WEBUI_API_BASE_URL}/documents/`, {
+	const res = await fetch(`${QA_BASE_URL}/api/v1/documents`, {
 		method: 'GET',
 		headers: {
 			Accept: 'application/json',

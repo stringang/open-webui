@@ -278,7 +278,7 @@ export const generateOpenAIChatCompletion = async (
 	const controller = new AbortController();
 	let error = null;
 
-	const res = await fetch(`${url}/chat/completions`, {
+	const res = await fetch(`${url}/v1/chat/completions`, {
 		signal: controller.signal,
 		method: 'POST',
 		headers: {
@@ -345,7 +345,7 @@ export const generateTitle = async (
 
 	console.log(template);
 
-	const res = await fetch(`${url}/chat/completions`, {
+	const res = await fetch(`${url}/v1/chat/completions`, {
 		method: 'POST',
 		headers: {
 			Accept: 'application/json',
@@ -403,7 +403,7 @@ export const generateSearchQuery = async (
 		day: '2-digit'
 	}).format(new Date());
 
-	const res = await fetch(`${url}/chat/completions`, {
+	const res = await fetch(`${url}/v1/chat/completions`, {
 		method: 'POST',
 		headers: {
 			Accept: 'application/json',
