@@ -8,10 +8,11 @@
 	export let page = 0;
 	export let count = 0;
 	export let perPage = 20;
+	export let onPageChange = () => {};
 </script>
 
 <div class="flex justify-center">
-	<Pagination.Root bind:page {count} {perPage} let:pages>
+	<Pagination.Root bind:page {count} {perPage} let:pages {onPageChange}>
 		<div class="my-2 flex items-center">
 			<Pagination.PrevButton
 				class="mr-[25px] inline-flex size-8 items-center justify-center rounded-[9px] bg-transparent hover:bg-gray-100 dark:hover:bg-gray-800 active:scale-98 disabled:cursor-not-allowed disabled:text-gray-400 dark:disabled:text-gray-700 hover:disabled:bg-transparent dark:hover:disabled:bg-transparent"

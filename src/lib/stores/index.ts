@@ -28,6 +28,7 @@ export const tags = writable([]);
 export const models: Writable<Model[]> = writable([]);
 export const prompts: Writable<Prompt[]> = writable([]);
 export const documents: Writable<Document[]> = writable([]);
+export const knowledgebase: Writable<Knowledge[]> = writable([]);
 
 export const tools = writable([]);
 export const functions = writable([]);
@@ -169,4 +170,9 @@ type SessionUser = {
 	name: string;
 	role: string;
 	profile_image_url: string;
+};
+
+type Knowledge = {
+	results: object[];
+	total: number;
 };

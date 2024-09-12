@@ -25,7 +25,7 @@
 	const handleKeyDown = (event: KeyboardEvent) => {
 		if (event.key === 'Escape' && isTopModal()) {
 			console.log('Escape');
-			show = false;
+			// show = false;
 		}
 	};
 
@@ -56,9 +56,7 @@
 		bind:this={modalElement}
 		class="modal fixed top-0 right-0 left-0 bottom-0 bg-black/60 w-full min-h-screen h-screen flex justify-center z-[9999] overflow-hidden overscroll-contain"
 		in:fade={{ duration: 10 }}
-		on:mousedown={() => {
-			show = false;
-		}}
+		on:mousedown={() => {}}
 	>
 		<div
 			class=" m-auto rounded-2xl max-w-full {sizeToWidth(
