@@ -50,15 +50,31 @@ localhost {
 	# 	{env.OLLAMA_API_ID} {env.OLLAMA_API_TOKEN_DIGEST}
 	# }
 
-	handle /api/* {
+	log {
+		output stdout
+		level DEBUG
+		format json
+	}
+
+	handle /qa/* {
+		# Comment to disable CORS
+		import cors-api
+		reverse_proxy xxx.example.com {
+		    header_up Host {upstream_hostport}
+		}
+	}
+
+	handle /store/* {
 		# Comment to disable CORS
 		import cors-api
 
-		reverse_proxy localhost:11434
+		reverse_proxy xxx.example.com {
+            header_up Host {upstream_hostport}
+		}
 	}
 
 	# Same-Origin Static Web Server
-	file_server {
-		root ./build/
+	handle {
+		reverse_proxy localhost:5173
 	}
 }
