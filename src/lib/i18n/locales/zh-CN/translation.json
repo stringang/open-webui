@@ -711,5 +711,7 @@
 	"Youtube": "YouTube",
 	"Me": "我的",
 	"Explore": "探索",
-	"File type '{{file_type}}' not supported for upload": "文件类型 “{{file_type}}” 不支持上传。"
+	"File type '{{file_type}}' not supported for upload": "文件类型 “{{file_type}}” 不支持上传。",
+	"Only support md|pdf|word|txt|xlsx file type.": "仅支持 md|pdf|word|txt|xlsx 类型文件上传",
+	"{{file_numbers}} document(s) selected.": "已选择 {{file_numbers}} 个文档"
 }

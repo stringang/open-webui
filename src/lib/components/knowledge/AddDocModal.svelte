@@ -4,7 +4,7 @@
 	import { onMount, getContext } from 'svelte';
 
 	import Modal from '../common/Modal.svelte';
-	import { SUPPORTED_FILE_EXTENSIONS, SUPPORTED_FILE_TYPE } from '$lib/constants';
+	import { SUPPORTED_FILE_EXTENSIONS, SUPPORTED_FILE_TYPE, WEBUI_BASE_URL } from '$lib/constants';
 
 	const i18n = getContext('i18n');
 
@@ -99,14 +99,19 @@
 								uploadDocInputElement.click();
 							}}
 						>
-							{#if inputFiles}
-								{inputFiles.length > 0 ? `${inputFiles.length}` : ''} document(s) selected.
+							{#if inputFiles && inputFiles.length}
+								 {$i18n.t(`{{file_numbers}} document(s) selected.` , { file_numbers: inputFiles.length })}
 							{:else}
 								{$i18n.t('Click here to select documents.')}
 							{/if}
 						</button>
 					</div>
 
+					<div class=" text-xs text-gray-500 text-center">
+							ⓘ {$i18n.t(
+								'Only support md|pdf|word|txt|xlsx file type.'
+							)}
+					</div>
 					<hr class=" dark:border-gray-850 my-2.5" />
 
 					<div class="flex justify-end pt-5 text-sm font-medium">

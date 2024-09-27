@@ -4,7 +4,7 @@
 	const { saveAs } = fileSaver;
 
 	import { onMount, getContext, tick } from 'svelte';
-	import { WEBUI_NAME, documents, showSidebar, knowledgebase } from '$lib/stores';
+	import { WEBUI_NAME, documents, showSidebar, knowledgebase, user } from '$lib/stores';
 	import { processDocToVectorDB } from '$lib/apis/rag';
 
 	import { SUPPORTED_FILE_TYPE, SUPPORTED_FILE_EXTENSIONS } from '$lib/constants';
@@ -17,6 +17,7 @@
 	import { deleteKnowledgeById, getKnowledge, uploadKnowledgeFile } from '$lib/apis/knowledge';
 	import Pagination from '$lib/components/common/Pagination.svelte';
 	import Spinner from '$lib/components/common/Spinner.svelte';
+	import dayjs from 'dayjs';
 
 	const i18n = getContext('i18n');
 
@@ -208,7 +209,7 @@
 			<div
 				class=" flex space-x-4 cursor-pointer text-left px-3 py-2 dark:hover:bg-white/5 hover:bg-black/5 rounded-xl">
 				<div class=" flex flex-1 space-x-4 cursor-pointer w-full">
-					<div class=" flex flex-col items-center space-x-3">
+					<div class=" flex flex-col items-center space-x-3 w-full">
 						<div class="p-2.5 bg-red-400 text-white rounded-lg">
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
@@ -228,13 +229,16 @@
 						</div>
 						<div class=" self-center flex-1 w-60">
 							<div class=" font-semibold line-clamp-1 text-center	text-balance">{doc?.meta?.name}</div>
-							<div class=" flex flex-row place-content-evenly	text-xs overflow-hidden text-ellipsis line-clamp-1 text-balance">
-								<img
-										src={doc?.user?.profile_image_url}
-										class=" max-w-[20px] object-cover rounded-full"
-										alt="User icon"
-									/>
-								<div class=" self-center font-light	">{doc?.user?.name}</div>
+							<div class=" flex flex-row justify-around text-xs overflow-hidden text-ellipsis line-clamp-1 text-balance">
+								<div class="flex flex-row ">
+									<img
+											src={doc?.user?.profile_image_url}
+											class=" max-w-[20px] object-cover rounded-full"
+											alt="User icon"
+										/>
+									<div class=" self-center font-light	">{doc?.user?.name}</div>
+								</div>
+								<div class=" self-center font-light	">{dayjs(doc.created_at * 1000).format($i18n.t('MMMM DD, YYYY'))}</div>
 							</div>
 						</div>
 					</div>
